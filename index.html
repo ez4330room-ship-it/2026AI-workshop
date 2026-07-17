@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI系列課程工作坊｜講義與資源</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1F2E38;
+    --paper:#FAF7EF;
+    --paper-card:#FFFDF8;
+    --rule:#C9BFA6;
+    --rule-soft:#DED4B9;
+    --stamp:#2C5F63;
+    --stamp-soft:#DDE9E7;
+    --flag:#A6402B;
+    --muted:#6B6558;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(31,46,56,0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:860px;margin:0 auto;padding:0 24px 96px;}
+
+  /* ===== Drawer header ===== */
+  .drawer{
+    margin-top:40px;
+    border:1px solid var(--ink);
+    background:var(--paper-card);
+    box-shadow: 6px 6px 0 rgba(31,46,56,0.08);
+  }
+  .drawer-tab{
+    display:flex; justify-content:space-between; align-items:center;
+    background:var(--ink); color:var(--paper);
+    padding:8px 20px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:.08em;
+  }
+  .drawer-body{padding:36px 32px 28px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px; letter-spacing:.14em; color:var(--stamp);
+    text-transform:uppercase; margin:0 0 10px;
+  }
+  h1{
+    font-family:'Source Serif 4',serif;
+    font-weight:700;
+    font-size:clamp(30px,5vw,44px);
+    margin:0 0 8px;
+    line-height:1.15;
+  }
+  .subtitle{
+    color:var(--muted); font-size:16px; margin:0 0 26px; max-width:56ch;
+  }
+  .date-tabs{display:flex; gap:12px; flex-wrap:wrap;}
+  .date-tab{
+    border:1px solid var(--rule);
+    background:var(--stamp-soft);
+    color:var(--stamp);
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    padding:6px 14px;
+    border-radius:2px;
+  }
+
+  /* ===== Instructor card ===== */
+  .instructor{
+    display:flex; gap:22px; align-items:center;
+    border:1px solid var(--rule);
+    background:var(--paper-card);
+    padding:22px 24px;
+    margin-top:24px;
+  }
+  @media (max-width:560px){ .instructor{flex-direction:column; align-items:flex-start; text-align:left;} }
+  .instructor-photo{
+    width:96px; height:96px; flex:none; border-radius:6px;
+    object-fit:cover; background:var(--paper-card);
+    border:6px solid #FFFFFF;
+    box-shadow: 0 3px 10px rgba(31,46,56,0.22);
+    transform:rotate(-3deg);
+  }
+  .instructor-name{
+    font-family:'Source Serif 4',serif; font-size:19px; font-weight:700; margin:0 0 6px;
+  }
+  .instructor-roles{margin:0 0 10px; padding:0; list-style:none;}
+  .instructor-roles li{
+    font-size:13px; color:var(--muted); line-height:1.7;
+    padding-left:14px; position:relative;
+  }
+  .instructor-roles li::before{
+    content:"·"; position:absolute; left:0; color:var(--stamp); font-weight:700;
+  }
+  .instructor-contact{
+    display:flex; gap:14px; flex-wrap:wrap;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--stamp);
+  }
+  .instructor-contact a{ color:var(--stamp); text-decoration:none; border-bottom:1px dotted var(--stamp); }
+  .instructor-contact a:hover{ color:var(--ink); border-color:var(--ink); }
+  .section{margin-top:56px;}
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:8px; margin-bottom:24px;
+  }
+  .section-head .tag{
+    font-family:'IBM Plex Mono',monospace; font-size:12px;
+    color:var(--paper); background:var(--ink);
+    padding:2px 8px; letter-spacing:.06em;
+  }
+  .section-head h2{
+    font-family:'Source Serif 4',serif;
+    font-size:22px; margin:0; font-weight:600;
+  }
+  .section-note{color:var(--muted); font-size:14px; margin:-14px 0 20px;}
+
+  /* ===== Session cards ===== */
+  .day-group{margin-bottom:28px;}
+  .day-group:last-child{margin-bottom:0;}
+  .day-head{
+    display:flex; align-items:center; gap:10px; margin-bottom:14px;
+  }
+  .day-head .day-date{
+    font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--stamp);
+    background:var(--stamp-soft); padding:4px 12px; border-radius:2px;
+  }
+  .day-head .day-line{flex:1; height:1px; background:var(--rule-soft);}
+
+  .sessions{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:640px){ .sessions{grid-template-columns:1fr;} }
+  .session-card{
+    border:1px solid var(--rule);
+    background:var(--paper-card);
+    padding:22px 20px 20px;
+    position:relative;
+    transition:box-shadow .18s ease, transform .18s ease;
+  }
+  .session-card:hover{ box-shadow:4px 4px 0 rgba(31,46,56,0.1); transform:translateY(-2px); }
+  .session-card::before{
+    content:"";
+    position:absolute; top:0; left:20px; right:20px; height:3px;
+    background:var(--stamp);
+  }
+  .session-num{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--stamp);
+    margin-bottom:8px;
+  }
+  .session-title{
+    font-family:'Source Serif 4',serif; font-size:18px; font-weight:600; margin:0 0 8px;
+    line-height:1.4;
+  }
+  .session-desc{
+    font-size:13.5px; color:var(--muted); margin:0 0 12px; line-height:1.6;
+  }
+  .session-status{
+    display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    color:var(--muted); border:1px dashed var(--rule-soft); padding:3px 8px;
+    letter-spacing:.04em;
+  }
+  .session-status.ready{
+    color:var(--stamp); border:1px solid var(--stamp); border-style:solid;
+    text-decoration:none; background:var(--stamp-soft);
+    transition:background .15s ease;
+  }
+  .session-status.ready:hover{ background:var(--stamp); color:var(--paper-card); }
+
+  /* ===== Materials — catalog list ===== */
+  .catalog-group{margin-bottom:26px;}
+  .catalog-group:last-child{margin-bottom:0;}
+  .catalog-group-head{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--stamp);
+    letter-spacing:.05em; margin-bottom:8px; padding-left:2px;
+  }
+  .catalog-group-head .full-title{
+    color:var(--ink); font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    margin-left:8px;
+  }
+  .catalog{border:1px solid var(--rule);}
+  .catalog-row{
+    display:flex; align-items:center; gap:16px;
+    padding:16px 18px;
+    border-bottom:1px solid var(--rule-soft);
+    background:var(--paper-card);
+    text-decoration:none; color:var(--ink);
+  }
+  .catalog-row:last-child{border-bottom:none;}
+  .catalog-row.available:hover{background:var(--stamp-soft);}
+  .catalog-num{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--muted);
+    width:112px; flex:none;
+  }
+  .catalog-main{flex:1; min-width:0;}
+  .catalog-title{font-weight:600; font-size:15px; margin:0 0 3px;}
+  .catalog-desc{font-size:13px; color:var(--muted); margin:0;}
+  .catalog-stamp{
+    flex:none; font-family:'IBM Plex Mono',monospace; font-size:11px;
+    letter-spacing:.06em; padding:4px 10px; border-radius:2px;
+    border:1.5px solid var(--stamp); color:var(--stamp);
+    transform:rotate(-3deg);
+  }
+  .catalog-stamp.pending{
+    border-color:var(--flag); color:var(--flag);
+    border-style:dashed;
+  }
+
+  footer{
+    margin-top:64px; padding-top:20px; border-top:1px solid var(--rule);
+    color:var(--muted); font-size:13px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;
+  }
+  footer .mono{font-family:'IBM Plex Mono',monospace; font-size:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="drawer">
+    <div class="drawer-tab">
+      <span>檔案室 / RESOURCE DRAWER</span>
+      <span>NDMU · 性別與健康研究室</span>
+    </div>
+    <div class="drawer-body">
+      <p class="eyebrow">工作坊講義與資源</p>
+      <h1>AI系列課程工作坊</h1>
+      <p class="subtitle">課程講義、簡報與延伸資源，於本頁統一提供學員下載與查閱。</p>
+      <div class="date-tabs">
+        <span class="date-tab">場次一・7/17</span>
+        <span class="date-tab">場次二・8/7</span>
+      </div>
+
+      <div class="instructor">
+        <img class="instructor-photo" src="assets/instructor.jpg" alt="邱于容">
+        <div>
+          <p class="instructor-name">邱于容</p>
+          <ul class="instructor-roles">
+            <li>國防醫學大學公共衛生學院副教授</li>
+            <li>臺北市公共衛生師公會副理事長</li>
+            <li>臺灣性別醫學學會秘書長</li>
+            <li>國防醫學大學源遠書苑性別與健康研究中心副主任</li>
+          </ul>
+          <div class="instructor-contact">
+            <a href="mailto:longruth0624.cr@gmail.com">longruth0624.cr@gmail.com</a>
+            <span>LINE：raina11111</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <span class="tag">SESSIONS</span>
+      <h2>課程場次</h2>
+    </div>
+    <p class="section-note">每場次對應之簡報與講義，將於資料到位後更新於下方「課程資源」。</p>
+
+    <div class="day-group">
+      <div class="day-head">
+        <span class="day-date">7 月 17 日</span>
+        <span class="day-line"></span>
+      </div>
+      <div class="sessions">
+        <div class="session-card" id="s-0717-1">
+          <div class="session-num">主題 01</div>
+          <h3 class="session-title">AI輔助文獻搜尋與關鍵字策略</h3>
+          <p class="session-desc">快速掌握高品質文獻搜尋實戰技巧</p>
+          <a class="session-status ready" href="#m-0717-1">教材／簡報／Skill 已上傳 →</a>
+        </div>
+        <div class="session-card" id="s-0717-2">
+          <div class="session-num">主題 02</div>
+          <h3 class="session-title">AI輔助以CASP與CEBM工具進行實證文獻評讀之實務應用</h3>
+          <a class="session-status ready" href="#m-0717-2" style="margin-top:12px;display:inline-block;">教材／簡報／Skill 已上傳 →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="day-group">
+      <div class="day-head">
+        <span class="day-date">8 月 7 日</span>
+        <span class="day-line"></span>
+      </div>
+      <div class="sessions">
+        <div class="session-card">
+          <div class="session-num">主題 01</div>
+          <h3 class="session-title">運用AI提升會議效率</h3>
+          <p class="session-desc">會議紀錄與重點摘要自動生成技巧</p>
+          <span class="session-status">檔案　待補</span>
+        </div>
+        <div class="session-card">
+          <div class="session-num">主題 02</div>
+          <h3 class="session-title">智慧審查新時代</h3>
+          <p class="session-desc">AI輔助各類報告之初審與意見回饋</p>
+          <span class="session-status">檔案　待補</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <span class="tag">MATERIALS</span>
+      <h2>課程資源</h2>
+    </div>
+
+    <div class="catalog-group" id="m-0717-1">
+      <div class="catalog-group-head">7/17・主題 01 <span class="full-title">AI輔助文獻搜尋與關鍵字策略</span></div>
+      <div class="catalog">
+        <a class="catalog-row available" href="materials/0717-01-handout.pdf" download>
+          <span class="catalog-num">AI-01・PDF</span>
+          <span class="catalog-main">
+            <p class="catalog-title">課程教材</p>
+            <p class="catalog-desc">文獻搜尋策略、MCP 與 Skills 說明、PubMed／Scite 連結與安裝教學</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-01-slides.pdf" download>
+          <span class="catalog-num">AI-02・PDF</span>
+          <span class="catalog-main">
+            <p class="catalog-title">課程簡報</p>
+            <p class="catalog-desc">當日授課投影片</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-01-pubmed-database.skill" download>
+          <span class="catalog-num">AI-03・SKILL</span>
+          <span class="catalog-main">
+            <p class="catalog-title">pubmed-database skill</p>
+            <p class="catalog-desc">進階檢索語法、MeSH 詞彙、E-utilities API 操作說明</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-01-scite-workflow.skill" download>
+          <span class="catalog-num">AI-04・SKILL</span>
+          <span class="catalog-main">
+            <p class="catalog-title">scite-workflow skill</p>
+            <p class="catalog-desc">Claude × Scite AI 文獻查核工作流程</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="catalog-group" id="m-0717-2">
+      <div class="catalog-group-head">7/17・主題 02 <span class="full-title">AI輔助以CASP與CEBM工具進行實證文獻評讀之實務應用</span></div>
+      <div class="catalog">
+        <a class="catalog-row available" href="materials/0717-02-ebn-case-report.skill" download>
+          <span class="catalog-num">AI-05・SKILL</span>
+          <span class="catalog-main">
+            <p class="catalog-title">ebn-case-report skill</p>
+            <p class="catalog-desc">引導逐步完成實證護理案例分析報告（15 步驟）</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-02-ebn-report-review.skill" download>
+          <span class="catalog-num">AI-06・SKILL</span>
+          <span class="catalog-main">
+            <p class="catalog-title">ebn-report-review skill</p>
+            <p class="catalog-desc">依審查評核表逐項評分之審查者工作流程</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-02-case-report-sample.docx" download>
+          <span class="catalog-num">AI-07・DOCX</span>
+          <span class="catalog-main">
+            <p class="catalog-title">案例分析報告範例</p>
+            <p class="catalog-desc">林女士案例・全膝關節置換術冷療</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-02-review-scoresheet-sample.xlsx" download>
+          <span class="catalog-num">AI-08・XLSX</span>
+          <span class="catalog-main">
+            <p class="catalog-title">審查評核表範例（已評分）</p>
+            <p class="catalog-desc">對應林女士案例之評分示範</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-02-handout.pdf" download>
+          <span class="catalog-num">AI-09・PDF</span>
+          <span class="catalog-main">
+            <p class="catalog-title">課程教材</p>
+            <p class="catalog-desc">CASP／CEBM 工具比較、報告格式、skill 安裝與操作教學</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="materials/0717-02-slides.pdf" download>
+          <span class="catalog-num">AI-10・PDF</span>
+          <span class="catalog-main">
+            <p class="catalog-title">課程簡報</p>
+            <p class="catalog-desc">當日授課投影片</p>
+          </span>
+          <span class="catalog-stamp">下載</span>
+        </a>
+        <a class="catalog-row available" href="https://chatgpt.com/g/g-6a559451ba98819198ce3251aca49b3f-shi-zheng-hu-li-bao-gao-ai-jiao-xue-zhu-li" target="_blank" rel="noopener">
+          <span class="catalog-num">AI-11・GPT</span>
+          <span class="catalog-main">
+            <p class="catalog-title">實證護理報告 AI 教學助理</p>
+            <p class="catalog-desc">引導撰寫實證護理案例分析報告之客製化 GPT</p>
+          </span>
+          <span class="catalog-stamp">開啟</span>
+        </a>
+        <a class="catalog-row available" href="https://chatgpt.com/g/g-6a55b70138fc8191970b894595802668-shi-zheng-hu-li-an-li-fen-xi-bao-gao-shen-cha-ping-fen-gpt" target="_blank" rel="noopener">
+          <span class="catalog-num">AI-12・GPT</span>
+          <span class="catalog-main">
+            <p class="catalog-title">實證護理案例分析報告審查評分助理</p>
+            <p class="catalog-desc">依審查評核表逐項評分之客製化 GPT</p>
+          </span>
+          <span class="catalog-stamp">開啟</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="catalog-group" id="m-0807-1">
+      <div class="catalog-group-head">8/7・主題 01 <span class="full-title">運用AI提升會議效率</span></div>
+      <div class="catalog">
+        <div class="catalog-row">
+          <span class="catalog-num">—</span>
+          <span class="catalog-main">
+            <p class="catalog-title">教材／簡報</p>
+            <p class="catalog-desc">待上傳</p>
+          </span>
+          <span class="catalog-stamp pending">尚未提供</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="catalog-group" id="m-0807-2">
+      <div class="catalog-group-head">8/7・主題 02 <span class="full-title">智慧審查新時代</span></div>
+      <div class="catalog">
+        <div class="catalog-row">
+          <span class="catalog-num">—</span>
+          <span class="catalog-main">
+            <p class="catalog-title">教材／簡報</p>
+            <p class="catalog-desc">待上傳</p>
+          </span>
+          <span class="catalog-stamp pending">尚未提供</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>國防醫學院 公共衛生學研究所・性別與健康研究室</span>
+    <span class="mono">LAST UPDATED 2026-07-17</span>
+  </footer>
+
+</div>
+</body>
+</html>
